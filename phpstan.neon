@@ -1,0 +1,16 @@
+parameters:
+    level: max
+    paths:
+        - src
+    excludePaths:
+        - src/StringOp/Constants.php
+    ignoreErrors:
+        # Allow some flexibility for string operations
+        - '#Access to an undefined property#'
+        # Allow dynamic property access for flexibility
+        - '#Dynamic call to static method#'
+        -
+            identifier: missingType.iterableValue
+        -
+            identifier: missingType.generics
+    reportUnmatchedIgnoredErrors: false
