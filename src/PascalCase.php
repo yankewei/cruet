@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Ykw\Cruet\Case;
+namespace Ykw\Cruet;
 
 /**
  * Converts strings to and detects PascalCase format
@@ -22,9 +22,9 @@ class PascalCase
             injectableChar: ' ',
             hasSeparator: false,
             inverted: false,
-            concatNum: true
+            concatNum: true,
         );
-        
+
         return CaseConverter::toCaseCamelLike($nonPascalizedString, $options);
     }
 

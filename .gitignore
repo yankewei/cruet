@@ -5,3 +5,4 @@ composer.lock
 .phpactor.json
 coverage
 vendor
+.DS_Store

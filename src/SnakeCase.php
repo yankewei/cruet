@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Ykw\Cruet\Case;
+namespace Ykw\Cruet;
 
 /**
  * Converts strings to and detects snake_case format
@@ -15,7 +15,11 @@ class SnakeCase
      */
     public static function toSnakeCase(string $nonSnakeCaseString): string
     {
-        return CaseConverter::toCaseSnakeLike($nonSnakeCaseString, '_', 'lower');
+        return CaseConverter::toCaseSnakeLike(
+            convertable_string: $nonSnakeCaseString,
+            replace_with: '_',
+            case: 'lower',
+        );
     }
 
     /**
