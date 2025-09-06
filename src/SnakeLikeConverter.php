@@ -6,13 +6,10 @@ namespace Ykw\Cruet;
 
 class SnakeLikeConverter
 {
-    public static function convert(
-        string $convertable_string,
-        string $replace_with,
-        string $case,
-    ): string {
+    public static function convert(string $convertable_string, string $replace_with, string $case): string
+    {
         $first_character = true;
-        $result = "";
+        $result = '';
         $right_trimmed = rtrim($convertable_string);
 
         $chars = mb_str_split($right_trimmed);
@@ -26,21 +23,9 @@ class SnakeLikeConverter
                     $first_character = true;
                     $result .= $replace_with;
                 }
-            } elseif (
-                self::requiresSeparator(
-                    $i,
-                    $char,
-                    $first_character,
-                    $convertable_string,
-                )
-            ) {
+            } elseif (self::requiresSeparator($i, $char, $first_character, $convertable_string)) {
                 $first_character = false;
-                $result = self::snakeLikeWithSeparator(
-                    $result,
-                    $replace_with,
-                    $char,
-                    $case,
-                );
+                $result = self::snakeLikeWithSeparator($result, $replace_with, $char, $case);
             } else {
                 $first_character = false;
                 $result = self::snakeLikeNoSeparator($result, $char, $case);
@@ -60,23 +45,20 @@ class SnakeLikeConverter
             return false;
         }
 
-        if (
-            self::charIsUppercase($char) &&
-            self::nextOrPreviousCharIsLowercase($convertableString, $charIndex)
-        ) {
+        if (self::charIsUppercase($char) && self::nextOrPreviousCharIsLowercase($convertableString, $charIndex)) {
             return true;
         }
 
         if (ctype_digit($char)) {
             $chars = mb_str_split($convertableString);
-            $prevChar = $charIndex > 0 ? $chars[$charIndex - 1] : "";
+            $prevChar = $charIndex > 0 ? $chars[$charIndex - 1] : '';
 
             return ctype_alpha($prevChar);
         }
 
         if (ctype_alpha($char)) {
             $chars = mb_str_split($convertableString);
-            $prevChar = $charIndex > 0 ? $chars[$charIndex - 1] : "";
+            $prevChar = $charIndex > 0 ? $chars[$charIndex - 1] : '';
 
             return ctype_digit($prevChar);
         }
@@ -84,12 +66,9 @@ class SnakeLikeConverter
         return false;
     }
 
-    private static function snakeLikeNoSeparator(
-        string $accumulator,
-        string $currentChar,
-        string $case,
-    ): string {
-        if ($case === "lower") {
+    private static function snakeLikeNoSeparator(string $accumulator, string $currentChar, string $case): string
+    {
+        if ($case === 'lower') {
             return $accumulator . strtolower($currentChar);
         }
         return $accumulator . strtoupper($currentChar);
@@ -101,22 +80,20 @@ class SnakeLikeConverter
         string $currentChar,
         string $case,
     ): string {
-        if ($case === "lower") {
+        if ($case === 'lower') {
             return $accumulator . $replaceWith . strtolower($currentChar);
         }
 
         return $accumulator . $replaceWith . strtoupper($currentChar);
     }
 
-    private static function nextOrPreviousCharIsLowercase(
-        string $convertableString,
-        int $charIndex,
-    ): bool {
+    private static function nextOrPreviousCharIsLowercase(string $convertableString, int $charIndex): bool
+    {
         $chars = mb_str_split($convertableString);
         $len = count($chars);
 
-        $nextChar = $charIndex + 1 < $len ? $chars[$charIndex + 1] : "A";
-        $prevChar = $charIndex > 0 ? $chars[$charIndex - 1] : "A";
+        $nextChar = ($charIndex + 1) < $len ? $chars[$charIndex + 1] : 'A';
+        $prevChar = $charIndex > 0 ? $chars[$charIndex - 1] : 'A';
 
         return ctype_lower($nextChar) || ctype_lower($prevChar);
     }

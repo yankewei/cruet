@@ -11,9 +11,9 @@ class CaseConverter
 {
     public static function createCamelOptions(
         bool $newWord = false,
-        string $lastChar = " ",
+        string $lastChar = ' ',
         bool $firstWord = false,
-        string $injectableChar = " ",
+        string $injectableChar = ' ',
         bool $hasSeparator = false,
         bool $inverted = false,
         bool $concatNum = true,
@@ -29,22 +29,13 @@ class CaseConverter
         );
     }
 
-    public static function toCaseSnakeLike(
-        string $convertable_string,
-        string $replace_with,
-        string $case,
-    ): string {
-        return SnakeLikeConverter::convert(
-            $convertable_string,
-            $replace_with,
-            $case,
-        );
+    public static function toCaseSnakeLike(string $convertable_string, string $replace_with, string $case): string
+    {
+        return SnakeLikeConverter::convert($convertable_string, $replace_with, $case);
     }
 
-    public static function toCaseCamelLike(
-        string $convertableString,
-        CamelOptions $camelOptions,
-    ): string {
+    public static function toCaseCamelLike(string $convertableString, CamelOptions $camelOptions): string
+    {
         return CamelLikeConverter::convert($convertableString, $camelOptions);
     }
 }

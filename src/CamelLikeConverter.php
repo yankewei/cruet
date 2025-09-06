@@ -6,15 +6,13 @@ namespace Ykw\Cruet;
 
 class CamelLikeConverter
 {
-    public static function convert(
-        string $convertableString,
-        CamelOptions $camelOptions,
-    ): string {
+    public static function convert(string $convertableString, CamelOptions $camelOptions): string
+    {
         $newWord = $camelOptions->new_word;
         $firstWord = $camelOptions->first_word;
         $lastChar = $camelOptions->last_char;
         $foundRealChar = false;
-        $result = "";
+        $result = '';
 
         $trimmed = self::trimRight($convertableString);
         $chars = mb_str_split($trimmed);
@@ -28,21 +26,10 @@ class CamelLikeConverter
                 $foundRealChar = true;
                 $newWord = true;
                 $result .= $character;
-            } elseif (
-                self::lastCharLowerCurrentIsUpperOrNewWord(
-                    $newWord,
-                    $lastChar,
-                    $character,
-                )
-            ) {
+            } elseif (self::lastCharLowerCurrentIsUpperOrNewWord($newWord, $lastChar, $character)) {
                 $foundRealChar = true;
                 $newWord = false;
-                $result = self::appendOnNewWord(
-                    $result,
-                    $firstWord,
-                    $character,
-                    $camelOptions,
-                );
+                $result = self::appendOnNewWord($result, $firstWord, $character, $camelOptions);
                 $firstWord = false;
             } else {
                 $foundRealChar = true;
@@ -60,12 +47,7 @@ class CamelLikeConverter
         string $character,
         CamelOptions $camelOptions,
     ): string {
-        if (
-            self::notFirstWordAndHasSeparator(
-                $firstWord,
-                $camelOptions->has_separator,
-            )
-        ) {
+        if (self::notFirstWordAndHasSeparator($firstWord, $camelOptions->has_separator)) {
             $result .= $camelOptions->injectable_char;
         }
 
@@ -78,17 +60,13 @@ class CamelLikeConverter
         return $result;
     }
 
-    private static function notFirstWordAndHasSeparator(
-        bool $firstWord,
-        bool $hasSeparator,
-    ): bool {
+    private static function notFirstWordAndHasSeparator(bool $firstWord, bool $hasSeparator): bool
+    {
         return $hasSeparator && !$firstWord;
     }
 
-    private static function firstWordOrNotInverted(
-        bool $firstWord,
-        bool $inverted,
-    ): bool {
+    private static function firstWordOrNotInverted(bool $firstWord, bool $inverted): bool
+    {
         return !$inverted || $firstWord;
     }
 
@@ -97,10 +75,7 @@ class CamelLikeConverter
         string $lastChar,
         string $character,
     ): bool {
-        return $newWord ||
-            (ctype_lower($lastChar) &&
-                ctype_upper($character) &&
-                $lastChar !== " ");
+        return $newWord || ctype_lower($lastChar) && ctype_upper($character) && $lastChar !== ' ';
     }
 
     private static function charIsSeparator(string $character): bool
